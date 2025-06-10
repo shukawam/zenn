@@ -3,7 +3,7 @@ title: "EKS クラスタの構築メモ"
 emoji: "🤖"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws", "kubernetes"]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -103,6 +103,28 @@ eksctl create addon \
     --force
 ```
 
+最後に、`gp2` をデフォルトの StorageClass として使用します。
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"storage.k8s.io/v1","kind":"StorageClass","metadata":{"annotations":{},"name":"gp2"},"parameters":{"fsType":"ext4","type":"gp2"},"provisioner":"kubernetes.io/aws-ebs","volumeBindingMode":"WaitForFirstConsumer"}
+    storageclass.kubernetes.io/is-default-class: "true" # 追加
+  creationTimestamp: "2025-06-09T02:24:28Z"
+  name: gp2
+  resourceVersion: "252020"
+  uid: 5aeaa46a-5ea3-4502-b285-8399c13d6ea0
+parameters:
+  fsType: ext4
+  type: gp2
+provisioner: kubernetes.io/aws-ebs
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+```
+
 ## 終わりに
 
-これで最低限の環境は整ったと思います。あとは、このクラスタで Kong Gateway や KIC(Kong Ingress Controller)などを検証していければと考えています。また、EKS Nativeに使うさまざまな方法（Pod Identity、etc.）などは全くキャッチアップできていないので、おいおいやっていければと思っています 💪
+これで最低限の環境は整ったと思います。あとは、このクラスタで Kong Gateway や KIC(Kong Ingress Controller)などを検証していければと考えています。また、EKS Native に使うさまざまな方法（Pod Identity、etc.）などは全くキャッチアップできていないので、おいおいやっていければと思っています 💪
