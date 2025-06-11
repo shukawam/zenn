@@ -3,7 +3,7 @@ title: "Kong Gateway(EE) を EKS 上に構築してみた"
 emoji: "🦍"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["kong", "aws", "kubernetes"]
-published: false
+published: true
 ---
 
 ## はじめに
