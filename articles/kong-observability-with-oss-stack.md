@@ -3,7 +3,7 @@ title: "Kong Gateway の監視基盤を OSS(Prometheus/Loki/Tempo + Grafana) で
 emoji: "🦍"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["kong", "kubernetes", "observability"]
-published: false
+published: true
 ---
 
 ## はじめに
