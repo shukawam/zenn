@@ -119,15 +119,15 @@ grafana:
         - name: Tempo
           type: tempo
           url: http://tempo:3100
-dashboards:
-  default:
-    kong-dashboard:
-      gnetId: 7424 # Install the following Grafana dashboard in the
-      revision: 11 # instance: https://grafana.com/dashboards/7424
-      datasource: Prometheus
-    kic-dashboard:
-      gnetId: 15662
-      datasource: Prometheus
+  dashboards:
+    default:
+      kong-dashboard:
+        gnetId: 7424 # Install the following Grafana dashboard in the
+        revision: 11 # instance: https://grafana.com/dashboards/7424
+        datasource: Prometheus
+      kic-dashboard:
+        gnetId: 15662
+        datasource: Prometheus
 ```
 
 この後、構築する Grafana Loki/Tempo を Datasource としてあらかじめ登録したり、Kong 社提供のダッシュボードを含めておくことがポイントです。以下を実行して、クラスタ上にデプロイしましょう。
