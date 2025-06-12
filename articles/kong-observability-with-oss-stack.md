@@ -316,8 +316,6 @@ metadata:
     global: "true"
 plugin: opentelemetry
 config:
-  resource_arrtibutes:
-    service.name: kong
   # gRPC endpoint is not supported by the OpenTelemetry plugin, so we use HTTP endpoints
   traces_endpoint: http://opentelemetry-collector.observability.svc.cluster.local:4318/v1/traces
   logs_endpoint: http://opentelemetry-collector.observability.svc.cluster.local:4318/v1/logs
