@@ -48,7 +48,7 @@ Kong Konnect は状態を持っている Control Plane の管理をプロバイ�
 
 ![prepare-step-2](/images/kong-konnect-with-ms-azure/prepare-step-2.png)
 
-その次に、Gateway のバージョンや稼働させるプラットフォームを選択します。今回は、2025/07 現在の最新版である **3.10** を選択します。プラットフォームに関しては、自身の環境に合わせたものが最初に選択されていると思いますが、Azure Container Apps にデプロイするため、**Linux(Docker)**を選択してください。また、セットアップスクリプトが表示されると思いますが、後の手順で利用するのでタブなどを閉じずにこのままにしておいてください。
+その次に、Gateway のバージョンや稼働させるプラットフォームを選択します。今回は、2025/07 現在の最新版である **3.10** を選択します。プラットフォームに関しては、自身の環境に合わせたものが最初に選択されていると思いますが、Azure Container Apps にデプロイするため、**Linux(Docker)** を選択してください。また、セットアップスクリプトが表示されると思いますが、後の手順で利用するのでタブなどを閉じずにこのままにしておいてください。
 
 ![prepare-step-3](/images/kong-konnect-with-ms-azure/prepare-step-3.png)
 
@@ -67,8 +67,7 @@ az containerapp env create \
 
 続いて、Azure Container Apps に Kong Gateway をデプロイするための構成を作成します。Konnect に表示されているセットアップスクリプトを参照しながら、以下の YAML ファイルを作成してください。
 
-```yaml
-# kong-gateway.yaml
+```kong-gateway.yaml
 properties:
   environmentId: /subscriptions/<your-subscription-id>/resourceGroups/<your-resource-group-name>/providers/Microsoft.App/managedEnvironments/azure-container-apps-gateway
   configuration:
@@ -155,8 +154,7 @@ az containerapp create \
 
 最後に簡単なサービスを登録し、動作確認を行います。以下の構成ファイルを、Kong Gateway を設定するための CLI である decK を使って読み込みます。
 
-```yaml
-# kong.yaml
+```kong.yaml
 _format_version: "3.0"
 
 services:
