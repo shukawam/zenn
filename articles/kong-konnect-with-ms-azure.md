@@ -67,7 +67,8 @@ az containerapp env create \
 
 続いて、Azure Container Apps に Kong Gateway をデプロイするための構成を作成します。Konnect に表示されているセットアップスクリプトを参照しながら、以下の YAML ファイルを作成してください。
 
-```kong-gateway.yaml
+```yaml
+# kong-gateway.yaml
 properties:
   environmentId: /subscriptions/<your-subscription-id>/resourceGroups/<your-resource-group-name>/providers/Microsoft.App/managedEnvironments/azure-container-apps-gateway
   configuration:
@@ -154,7 +155,8 @@ az containerapp create \
 
 最後に簡単なサービスを登録し、動作確認を行います。以下の構成ファイルを、Kong Gateway を設定するための CLI である decK を使って読み込みます。
 
-```kong.yaml
+```yaml
+# kong.yaml
 _format_version: "3.0"
 
 services:
