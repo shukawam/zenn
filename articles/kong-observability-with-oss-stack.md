@@ -103,8 +103,8 @@ grafana:
           type: file
           disableDeletion: false
           editable: true
-    options:
-      path: /var/lib/grafana/dashboards/default
+          options:
+            path: /var/lib/grafana/dashboards/default
   datasources:
     datasources.yaml:
       apiVersion: 1
@@ -161,8 +161,7 @@ Tempo は、特に何も変更を加えていないのでそのままデプロ�
 
 ```sh
 helm install tempo grafana/tempo \
-    -n observability \
-    --values values.yaml
+    -n observability
 ```
 
 ### OpenTelemetry Collector
@@ -182,7 +181,8 @@ admissionWebhooks:
 
 ```sh
 helm install opentelemetry-operator open-telemetry/opentelemetry-operator \
-    -n observability
+    -n observability \
+    --values values.yaml
 ```
 
 続いて、インストールしたオペレーターを用いて、各テレメトリー・データを収集、処理、送信するための OpenTelemetry コレクターを作成します。
@@ -234,7 +234,7 @@ spec:
 Kubernetes クラスタ上にデプロイします。
 
 ```sh
-kubectl apply -f opentelemetry-collector.yaml
+kubectl apply -f opentelemetry-collector.yaml -n observability
 ```
 
 ### Kong Gateway
