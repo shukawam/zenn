@@ -148,7 +148,8 @@ serviceMonitor:
 ちなみに、リリースラベルについてはクラスタに存在する Prometheus リソースの `serviceMonitorSelector` を確認して、一致するように記述すれば良いです。
 
 ```sh
-kubectl -n observability get prometheus -o yaml | yq .items[].spec.serviceMonitorSelector
+kubectl -n observability get prometheus -o yaml \
+| yq .items[].spec.serviceMonitorSelector
 ```
 
 実行結果
