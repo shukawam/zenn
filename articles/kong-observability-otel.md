@@ -3,7 +3,7 @@ title: "Kong Gateway のオブザーバビリティを OpenTelemetry で高め�
 emoji: "🔭"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["kong", "opentelemetry"]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -36,7 +36,7 @@ https://zenn.dev/shukawam/articles/kong-observability-with-oss-stack
 
 ### File Log Plugin
 
-[File Log Plugin](https://developer.konghq.com/plugins/file-log/) は、Kong Gateway に対するリクエスト、レスポンスのログを JSON 形式でファイル出力するためのプラグインです。Kubernetes 環境の場合は、コンテナの標準出力に出力されたログはコンテナランタイムによってホスト側の所定の場所（`/var/log/pods/*/*.log` など）に出力されたものをログコレクター[^2]で収集し、適切なバックエンドに送信することが一般的かと思いますが、本プラグインで出力先を `/dev/stdout` や `/dev/stderr` に指定することでその営みに活用することが可能です。
+[File Log Plugin](https://developer.konghq.com/plugins/file-log/) は、Kong Gateway に対するリクエスト、レスポンスのログを JSON 形式でファイル出力するためのプラグインです。Kubernetes 環境の場合は、コンテナの標準出力に出力されたログはコンテナランタイムによってホスト側の所定の場所（`/var/log/pods/*/*.log` など）に出力され、それをログコレクター[^2]で収集し、適切なバックエンドに送信することが一般的かと思いますが、本プラグインで出力先を `/dev/stdout` や `/dev/stderr` に指定することでその営みを活用することが可能です。
 
 [^2]: Promtail, Vector, Fluent Bit など
 
@@ -62,7 +62,7 @@ https://zenn.dev/shukawam/articles/kong-observability-with-oss-stack
 | `all`                  | すべての計装を有効化する                                   |
 | `off`                  | すべての計装を無効化する（デフォルト）                     |
 
-個人的には、すべての計装を有効(`all`)にし不要な部分があれば削っていくみたいな方針で良いんじゃないかな？と思います。また、プラグイン側の設定でシグナル送信に関するいくつかの設定（バッチやキュー）が設定できますが、ここではあまり複雑なことは行わずに OpenTelemetry Collector 側に移譲する方が設計としてはシンプルになると思います。
+個人的には、すべての計装を有効(`all`)にし不要な部分があれば削っていくみたいな方針で良いんじゃないかな？と思います。また、プラグイン側の設定でシグナル送信に関するいくつかの設定（バッチやキューなど）が設定できますが、ここではあまり複雑なことは行わずに OpenTelemetry Collector 側に移譲する方が設計としてはシンプルになると思います。
 
 ## 実際の設定例や注意点について
 
@@ -87,7 +87,7 @@ plugins:
       wasm_metrics: false
 ```
 
-`wasm_metrics` は、自分の利用用途だと使わないので無効化しています。（というか、コードベースを見ても Wasm 関係のメトリクスを収集している様子もなさそうでしたのでどこで使われているのやら...。）
+`wasm_metrics` は、自分の利用用途だと使わないので無効化しています。（というか、コードベースを見ても Wasm 関係のメトリクスを収集している様子もなさそうでしたのでどこで使われているのやら...）
 
 次に、File Log Plugin です。
 
@@ -100,7 +100,7 @@ plugins:
       path: /dev/stdout
 ```
 
-アクセスログは、標準出力（`/dev/stdout`）に出力しておくことで、コンテナランタイムがホスト上の所定のディレクトリにログを出力してくれます。一応、Fluent Bit のような軽量なログコレクターをサイドカーのような形でデプロイして、アクセスログを収集する方法もあります（下図参照）が同一クラスタに OpenTelemetry Collector をデプロイする場合は、File Log Plugin を用いるのが最も簡単に実現できるでしょう。
+アクセスログは、標準出力（`/dev/stdout`）に出力しておくことで、コンテナランタイムがホスト上の所定のディレクトリにログを出力してくれます。一応、Fluent Bit のような軽量なログコレクターをサイドカーのような形でデプロイして、アクセスログを収集する方法もあります（下図参照）が、同一クラスタに OpenTelemetry Collector をデプロイする場合は、File Log Plugin を用いるのが最も簡単に実現できるでしょう。
 
 ![http-log-plugin](/images/kong-observability-otel/http-log-plugin.png)
 
@@ -124,7 +124,7 @@ plugins:
 
 ### メトリクスについて
 
-なるべく OpenTelemetry に集約するって言ってるじゃん！嘘つき！と言われそうですが、メトリクスだけは Prometheus から直接 pull した方が素直に実現できます。[OpenTelemetry Collector Kubernetes Distro](https://github.com/open-telemetry/opentelemetry-collector-releases/tree/main/distributions/otelcol-k8s) にも Prometheus Receiver が含まれている[^4]ので、これを用いれば良さそうに見えますが、Kong Gateway でメトリクスを取得する上での推奨である Status API(読み取り専用のステータス情報などを提供する API)は、サービスなどに公開するように作られていません。[^5]
+なるべく OpenTelemetry に集約するって言ってるじゃん！嘘つき！と言われそうですが、メトリクスだけは Prometheus から直接 pull した方が素直に実現できます。[OpenTelemetry Collector Kubernetes Distro](https://github.com/open-telemetry/opentelemetry-collector-releases/tree/main/distributions/otelcol-k8s) にも Prometheus Receiver が含まれている[^4]ので、これを用いれば良さそうに見えますが、Kong Gateway でメトリクスを取得する上での推奨である Status API(読み取り専用のステータス情報などを提供する API)は、サービスなどに公開するように作られていません[^5]。
 
 [^4]: https://github.com/open-telemetry/opentelemetry-collector-releases/blob/main/distributions/otelcol-k8s/manifest.yaml#L70
 [^5]: https://github.com/Kong/charts/blob/main/charts/kong/values.yaml#L215-L223
@@ -145,7 +145,7 @@ serviceMonitor:
     release: kube-prometheus-stack
 ```
 
-ちなみに、リリースラベルについてはクラスタに存在する Prometheus リソースの `serviceMonitorSelector` を確認すれば良いです。
+ちなみに、リリースラベルについてはクラスタに存在する Prometheus リソースの `serviceMonitorSelector` を確認して、一致するように記述すれば良いです。
 
 ```sh
 kubectl -n observability get prometheus -o yaml | yq .items[].spec.serviceMonitorSelector
