@@ -72,9 +72,9 @@ _Kong Manager で ID/パスワードによる認証が求められる様子_
 
 これに加えて、セキュリティ観点でよく設定する項目としては以下があげられます。（Docker で指定する時は、Prefix に `KONG_` をつければ良いです）
 
-- admin_gui_auth_password_complexity: パスワードの複雑性を決定するためのパラメータ
-- admin_gui_auth_login_attempts: ログインの試行回数上限（0 に設定した場合は、無限回の施行が許可される）
-- admin_gui_auth_login_attempts_ttl: ログイン施行履歴の保持期間
+- `admin_gui_auth_password_complexity`: パスワードの複雑性を決定するためのパラメータ
+- `admin_gui_auth_login_attempts`: ログインの試行回数上限（0 に設定した場合は、無限回の施行が許可される）
+- `admin_gui_auth_login_attempts_ttl`: ログイン施行履歴の保持期間
 
 その他の項目は以下をご参照ください。
 
