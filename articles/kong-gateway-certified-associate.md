@@ -1,5 +1,5 @@
 ---
-title: "Kong Gateway Certified Associate合格体験記"
+title: "Kong Gateway Certified Associate 合格体験記"
 emoji: "🦍"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["kong"]
@@ -7,6 +7,10 @@ published: false
 ---
 
 ## はじめに
+
+[Kong Gateway Certified Associate](https://konghq.com/academy/exam-preparation) という Kong Gateway のための資格を受けてみました。タイトルにある通り、ちゃんと合格したので書けそうな範囲でやったことや諸注意をまとめてみたいと思います。別の日本語記事に以下があるのですが、なるべく重複しないように書きたいと思います。
+
+https://qiita.com/ipppppei/items/0bde08881d836d2e6a54
 
 ## やったこと
 
