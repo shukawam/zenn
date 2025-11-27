@@ -9,7 +9,7 @@ published_at: 2025-12-01 09:00
 
 ## はじめに
 
-こんにちは 🖐️ この記事は、[Kong Advent Calendar 2025](https://qiita.com/advent-calendar/2025/kong) の Day1 として書かれています。今回は、Kong 社の年次イベントである API Summit で発表された [Volcano SDK](https://github.com/Kong/volcano-sdk) の代表パターンを触ってみたいと思います。
+こんにちは🖐️ この記事は、[Kong Advent Calendar 2025](https://qiita.com/advent-calendar/2025/kong) の Day1 として書かれています。初日なのに Kong Gateway の話じゃないのが若干心苦しいですが、気楽に読んでいただければと🙏 今回は、Kong 社の年次イベントである API Summit で発表された [Volcano SDK](https://github.com/Kong/volcano-sdk) の代表パターンを触ってみたいと思います。
 
 ## Volcano SDK 🌋
 
@@ -113,7 +113,9 @@ export type OpenAIOptions = {
 
 ### OpenTelemetry を使ったテレメトリーシグナルの転送
 
-Volcano SDK は、OpenTelemetry を使ってテレメトリー（メトリクス、トレース）をエクスポートするための仕組みが実装されています。ドキュメントは、以下に記載があるのですが、より簡単に試すには本記事で記載されている内容で十分かと思いますので、ご参考にしてください。
+Volcano SDK は、OpenTelemetry を使ってテレメトリー（メトリクス、トレース）をエクスポートするための仕組みが実装されています。ドキュメントは、以下に記載があるのですが、より簡単に試すには本記事で記載されている内容で十分かと思いますので、参考にしてください。
+
+https://volcano.dev/docs/observability#opentelemetry-integration
 
 まず、OpenTelemetry 関連の依存はデフォルトでは含まれていないので、自分で含めてあげる必要があります。
 
@@ -305,7 +307,7 @@ const revenueTool = mcpStdio({
 
 ### マルチエージェントの実行パターン
 
-Volcano SDK では、複数のエージェントが協調してタスクと解くマルチエージェントの実行パターンもサポートされています。以下のように実装します。
+Volcano SDK では、複数のエージェントが協調してタスクを解くマルチエージェントの実行パターンもサポートされています。以下のように実装します。
 
 ```ts:multi-agent.ts
 import { agent, llmOpenAI } from "volcano-sdk";
