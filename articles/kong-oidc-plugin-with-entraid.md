@@ -178,6 +178,14 @@ plugins:
         port: 6379
 ```
 
+:::message
+
+`config.client_jwt` の `d`, `p`, `q`, `dp`, `dq`, `qi` などは、いわゆる秘密鍵の本体になります。今は、この記事のための鍵ペアを作っており、わかりやすさのために設定ファイルに直接記述していますが、本来であれば Vault などのシークレットストアへ格納し、それを参照する方法を取ることを推奨します。
+
+https://developer.konghq.com/gateway/entities/vault/
+
+:::
+
 クライアント ID、シークレットを用いた場合との差分について解説します。
 
 まずは、`config.client_auth` というパラメータについてです。
