@@ -3,7 +3,7 @@ title: "Kong KonnectにIP制限をかける"
 emoji: "🔑"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["kong"]
-published: false
+published: true
 ---
 
 ## はじめに
