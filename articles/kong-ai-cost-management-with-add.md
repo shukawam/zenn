@@ -12,7 +12,7 @@ published: true
 
 ## AI Cost Management
 
-AI Cost Managementは、Kong AI Gatewayを通るリクエストごとに使用量のイベントを記録し、ユーザーやチームに帰属させ、価格カタログで値付けしたうえでダッシュボードに出してくれるKong Konnectの機能であり、2027年11月にリリースされました。
+AI Cost Managementは、Kong AI Gatewayを通るリクエストごとに使用量のイベントを記録し、ユーザーやチームに帰属させ、価格カタログで値付けしたうえでダッシュボードに出してくれるKong Konnectの機能であり、2026年11月にリリースされました。
 
 https://developer.konghq.com/ai-cost-management/
 
